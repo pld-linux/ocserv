@@ -1,22 +1,33 @@
+# TODO: heimdal support
+#
+# Conditional build:
+%bcond_with	kerberos5	# GSSAPI authentication (currently only MIT krb5 supported)
+%bcond_without	radius		# RADIUS support
+#
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	0.8.7
+Version:	0.10.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	79c00132c3366bb60546f256068211eb
+# Source0-md5:	d39c3101f73fdc785a7c2cbdb00c40fd
 URL:		http://www.infradead.org/ocserv/
 BuildRequires:	autogen
 BuildRequires:	autogen-devel
 BuildRequires:	dbus-devel >= 1.1.1
+%{?with_radius:BuildRequires:	freeradius-client-devel >= 1.1.7}
 BuildRequires:	gnutls-devel >= 3.1.10
 BuildRequires:	http-parser-devel
+# pkgconfig(krb5-gssapi)
+%{?with_kerberos5:BuildRequires:	krb5-devel}
 BuildRequires:	libnl-devel >= 3.2
 BuildRequires:	libpcl-devel
 BuildRequires:	libseccomp-devel
+%{?with_kerberos5:BuildRequires:	libtasn1-devel >= 3.9}
 BuildRequires:	libwrap-devel
+BuildRequires:	lz4-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	protobuf-c-devel
@@ -26,6 +37,7 @@ BuildRequires:	talloc-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	dbus-libs >= 1.1.1
+%{?with_radius:Requires:	freeradius-client-libs >= 1.1.7}
 Requires:	gnutls >= 3.1.10
 Requires:	libnl >= 3.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,7 +68,9 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 
 %build
 %configure \
-	--disable-silent-rules
+	--disable-silent-rules \
+	%{!?with_kerberos5:--without-gssapi} \
+	%{!?with_radius:--without-radius}
 %{__make}
 
 %install
