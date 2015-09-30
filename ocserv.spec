@@ -7,12 +7,12 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	0.10.4
+Version:	0.10.8
 Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	6df31778642320ea7b90f314c4c9a897
+# Source0-md5:	665b854377850db535271098a37213f1
 URL:		http://www.infradead.org/ocserv/
 BuildRequires:	autogen
 BuildRequires:	autogen-devel
