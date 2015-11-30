@@ -7,17 +7,16 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	0.10.8
+Version:	0.10.10
 Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	665b854377850db535271098a37213f1
+# Source0-md5:	1f73ccb66d36cd51279323e95ae99e68
 URL:		http://www.infradead.org/ocserv/
 BuildRequires:	autogen
 BuildRequires:	autogen-devel
 BuildRequires:	dbus-devel >= 1.1.1
-%{?with_radius:BuildRequires:	freeradius-client-devel >= 1.1.7}
 BuildRequires:	gnutls-devel >= 3.1.10
 BuildRequires:	http-parser-devel
 # pkgconfig(krb5-gssapi)
@@ -31,15 +30,16 @@ BuildRequires:	lz4-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	protobuf-c-devel
+%{?with_radius:BuildRequires:	radcli-devel >= 1.2.1}
 BuildRequires:	readline-devel
 BuildRequires:	systemd-devel
 BuildRequires:	talloc-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	dbus-libs >= 1.1.1
-%{?with_radius:Requires:	freeradius-client-libs >= 1.1.7}
 Requires:	gnutls >= 3.1.10
 Requires:	libnl >= 3.2
+%{?with_radius:Requires:	radcli >= 1.2.1}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -84,9 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE NEWS README TODO
+%doc AUTHORS ChangeLog LICENSE NEWS README.md TODO
 %attr(755,root,root) %{_bindir}/occtl
 %attr(755,root,root) %{_bindir}/ocpasswd
+%attr(755,root,root) %{_bindir}/ocserv-fw
 %attr(755,root,root) %{_sbindir}/ocserv
 %{_mandir}/man8/occtl.8*
 %{_mandir}/man8/ocpasswd.8*
