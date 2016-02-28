@@ -7,39 +7,43 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	0.10.10
+Version:	0.11.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	1f73ccb66d36cd51279323e95ae99e68
+# Source0-md5:	9161b506142232957ccf786c251b5b42
+Patch0:		%{name}-link.patch
 URL:		http://www.infradead.org/ocserv/
+BuildRequires:	autoconf >= 2.61
+BuildRequires:	automake >= 1:1.11.3
 BuildRequires:	autogen
 BuildRequires:	autogen-devel
-BuildRequires:	dbus-devel >= 1.1.1
 BuildRequires:	gnutls-devel >= 3.1.10
 BuildRequires:	http-parser-devel
 # pkgconfig(krb5-gssapi)
 %{?with_kerberos5:BuildRequires:	krb5-devel}
+BuildRequires:	libev-devel >= 4
 BuildRequires:	libnl-devel >= 3.2
 BuildRequires:	libpcl-devel
 BuildRequires:	libseccomp-devel
 %{?with_kerberos5:BuildRequires:	libtasn1-devel >= 3.9}
 BuildRequires:	libwrap-devel
 BuildRequires:	lz4-devel
+BuildRequires:	nettle-devel >= 2.7
+BuildRequires:	oath-toolkit-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	protobuf-c-devel
-%{?with_radius:BuildRequires:	radcli-devel >= 1.2.1}
+%{?with_radius:BuildRequires:	radcli-devel >= 1.2.5}
 BuildRequires:	readline-devel
 BuildRequires:	systemd-devel
 BuildRequires:	talloc-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	dbus-libs >= 1.1.1
 Requires:	gnutls >= 3.1.10
 Requires:	libnl >= 3.2
-%{?with_radius:Requires:	radcli >= 1.2.1}
+%{?with_radius:Requires:	radcli >= 1.2.5}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,8 +69,13 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__aclocal} -I gl/m4 -I libopts/m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-silent-rules \
 	%{!?with_kerberos5:--without-gssapi} \

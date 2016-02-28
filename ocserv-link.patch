@@ -1,0 +1,32 @@
+--- ocserv-0.11.0/src/Makefile.am.orig	2016-01-18 09:07:27.000000000 +0100
++++ ocserv-0.11.0/src/Makefile.am	2016-02-28 11:36:30.909331089 +0100
+@@ -74,13 +74,13 @@
+ ocserv_SOURCES += kkdcp_asn1_tab.c kkdcp.asn 
+ endif
+ 
+-ocserv_LDADD = ../gl/libgnu.a $(NEEDED_LIBOPTS) libcmd-ocserv.a ccan/libccan.a common/libcommon.a
++ocserv_LDADD = ../gl/libgnu.a $(NEEDED_LIBOPTS) libcmd-ocserv.a ccan/libccan.a common/libcommon.a libipc.a
+ ocserv_LDADD += $(LIBGNUTLS_LIBS) $(PAM_LIBS) $(LIBUTIL) \
+ 	$(LIBSECCOMP) $(LIBWRAP) $(LIBCRYPT) $(NEEDED_HTTP_PARSER_LIBS) \
+ 	$(LIBPROTOBUF_C_LIBS) $(LIBSYSTEMD) $(LIBTALLOC_LIBS) \
+ 	$(RADCLI_LIBS) $(LIBLZ4_LIBS) $(LIBKRB5_LIBS) \
+ 	$(LIBTASN1_LIBS) $(LIBOATH_LIBS) $(LIBNETTLE_LIBS) \
+-	$(LIBEV_LIBS) libipc.a
++	$(LIBEV_LIBS)
+ 
+ 
+ if PCL
+--- ocserv-0.11.0/src/occtl/Makefile.am.orig	2016-02-10 13:08:43.000000000 +0100
++++ ocserv-0.11.0/src/occtl/Makefile.am	2016-02-28 14:41:50.838864527 +0100
+@@ -17,9 +17,8 @@
+ 
+ occtl_SOURCES = occtl.c pager.c occtl.h time.c cache.c ip-cache.c \
+ 	nl.c ctl.h print.c json.c json.h
+-occtl_LDADD = ../../gl/libgnu.a ../common/libcommon.a $(LIBREADLINE_LIBS) \
+-	$(LIBNL3_LIBS) $(LIBPROTOBUF_C_LIBS) $(LIBTALLOC_LIBS) ../ccan/libccan.a \
+-	../libipc.a
++occtl_LDADD = ../../gl/libgnu.a ../common/libcommon.a ../ccan/libccan.a ../libipc.a \
++	$(LIBREADLINE_LIBS) $(LIBNL3_LIBS) $(LIBPROTOBUF_C_LIBS) $(LIBTALLOC_LIBS)
+ 
+ if LOCAL_PROTOBUF_C
+ occtl_LDADD += ../protobuf/libprotobuf.a
