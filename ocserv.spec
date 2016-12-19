@@ -7,12 +7,12 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	0.11.3
-Release:	2
+Version:	0.11.6
+Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	ffe3d79662e939bb55dfe7c9e490b4f2
+# Source0-md5:	0e4f82d267d27f2f9d3fcba58ac6cf5a
 Patch0:		%{name}-link.patch
 URL:		http://www.infradead.org/ocserv/
 BuildRequires:	autoconf >= 2.61
@@ -29,7 +29,7 @@ BuildRequires:	libpcl-devel
 BuildRequires:	libseccomp-devel
 %{?with_kerberos5:BuildRequires:	libtasn1-devel >= 3.9}
 BuildRequires:	libwrap-devel
-BuildRequires:	lz4-devel
+BuildRequires:	lz4-devel >= 1:1.7
 BuildRequires:	nettle-devel >= 2.7
 BuildRequires:	oath-toolkit-devel
 BuildRequires:	pam-devel
