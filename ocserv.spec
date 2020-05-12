@@ -2,28 +2,31 @@
 #
 # Conditional build:
 %bcond_with	kerberos5	# GSSAPI authentication (currently only MIT krb5 supported)
+%bcond_without	oidc		# OpenID Connect authentication
 %bcond_without	radius		# RADIUS support
 #
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	0.11.6
-Release:	4
+Version:	1.0.1
+Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	0e4f82d267d27f2f9d3fcba58ac6cf5a
+# Source0-md5:	aadd7723cc1c75ddf2b999433aa98d96
 Patch0:		%{name}-link.patch
 URL:		http://www.infradead.org/ocserv/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11.3
-BuildRequires:	autogen
-BuildRequires:	autogen-devel
-BuildRequires:	gnutls-devel >= 3.1.10
+%{?with_oidc:BuildRequires:	cjose-devel}
+%{?with_oidc:BuildRequires:	curl-devel}
+BuildRequires:	gnutls-devel >= 3.6.0
 BuildRequires:	http-parser-devel
+%{?with_oidc:BuildRequires:	jansson-devel}
 # pkgconfig(krb5-gssapi)
 %{?with_kerberos5:BuildRequires:	krb5-devel}
 BuildRequires:	libev-devel >= 4
+BuildRequires:	libmaxminddb-devel >= 1.0.0
 BuildRequires:	libnl-devel >= 3.2
 BuildRequires:	libpcl-devel
 BuildRequires:	libseccomp-devel
@@ -41,8 +44,10 @@ BuildRequires:	systemd-devel
 BuildRequires:	talloc-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	gnutls >= 3.1.10
+Requires:	gnutls >= 3.6.0
+Requires:	libmaxminddb >= 1.0.0
 Requires:	libnl >= 3.2
+Requires:	nettle >= 2.7
 %{?with_radius:Requires:	radcli >= 1.2.5}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -72,12 +77,13 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 %patch0 -p1
 
 %build
-%{__aclocal} -I gl/m4 -I libopts/m4
+%{__aclocal} -I m4 -I gl/m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
 	--disable-silent-rules \
+	%{?with_oidc:--enable-oidc-auth} \
 	%{!?with_kerberos5:--without-gssapi} \
 	%{!?with_radius:--without-radius}
 %{__make}
