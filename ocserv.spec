@@ -8,14 +8,14 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	1.0.1
+Version:	1.1.2
 Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	aadd7723cc1c75ddf2b999433aa98d96
+# Source0-md5:	51331a912464bb0c731cea61a8a4a7f2
 Patch0:		%{name}-link.patch
-URL:		http://www.infradead.org/ocserv/
+URL:		http://ocserv.gitlab.io/www/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11.3
 %{?with_oidc:BuildRequires:	cjose-devel}
@@ -104,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ocpasswd
 %attr(755,root,root) %{_bindir}/ocserv-fw
 %attr(755,root,root) %{_sbindir}/ocserv
+%attr(755,root,root) %{_sbindir}/ocserv-worker
 %{_mandir}/man8/occtl.8*
 %{_mandir}/man8/ocpasswd.8*
 %{_mandir}/man8/ocserv.8*

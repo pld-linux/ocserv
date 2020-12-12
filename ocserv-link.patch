@@ -1,12 +1,12 @@
---- ocserv-1.0.1/src/Makefile.am.orig	2020-05-12 20:57:37.308459654 +0200
-+++ ocserv-1.0.1/src/Makefile.am	2020-05-12 21:05:33.645879112 +0200
-@@ -70,13 +70,13 @@
+--- ocserv-1.1.2/src/Makefile.am.orig	2020-08-11 23:13:48.000000000 +0200
++++ ocserv-1.1.2/src/Makefile.am	2020-12-12 12:01:01.742091938 +0100
+@@ -80,13 +80,13 @@
  HTTP_PARSER_SOURCES = http-parser/http_parser.c http-parser/http_parser.h
  endif
  
--ocserv_LDADD = ../gl/libgnu.a libccan.a libcommon.a
-+ocserv_LDADD = ../gl/libgnu.a libccan.a libcommon.a libipc.a
- ocserv_LDADD += $(LIBGNUTLS_LIBS) $(PAM_LIBS) $(LIBUTIL) \
+-CORE_LDADD = ../gl/libgnu.a libccan.a libcommon.a
++CORE_LDADD = ../gl/libgnu.a libccan.a libcommon.a libipc.a
+ CORE_LDADD += $(LIBGNUTLS_LIBS) $(PAM_LIBS) $(LIBUTIL) \
  	$(LIBSECCOMP) $(LIBWRAP) $(LIBCRYPT) $(NEEDED_HTTP_PARSER_LIBS) \
  	$(NEEDED_LIBPROTOBUF_LIBS) $(LIBSYSTEMD) $(LIBTALLOC_LIBS) \
  	$(RADCLI_LIBS) $(LIBLZ4_LIBS) $(LIBKRB5_LIBS) \
@@ -15,8 +15,8 @@
 +	$(LIBEV_LIBS) $(NEEDED_LIBPROTOBUF_LIBS) \
  	$(CODE_COVERAGE_LDFLAGS) 
  	
- if ENABLE_OIDC_AUTH
-@@ -122,9 +122,9 @@
+ if ENABLE_LATENCY_SUPPORT
+@@ -134,9 +134,9 @@
  occtl_occtl_SOURCES += occtl/geoip.c
  endif
  
