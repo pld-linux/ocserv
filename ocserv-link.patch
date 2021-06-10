@@ -1,8 +1,8 @@
---- ocserv-1.1.2/src/Makefile.am.orig	2020-08-11 23:13:48.000000000 +0200
-+++ ocserv-1.1.2/src/Makefile.am	2020-12-12 12:01:01.742091938 +0100
-@@ -80,13 +80,13 @@
- HTTP_PARSER_SOURCES = http-parser/http_parser.c http-parser/http_parser.h
- endif
+--- ocserv-1.1.3/src/Makefile.am.orig	2020-12-19 13:45:44.000000000 +0100
++++ ocserv-1.1.3/src/Makefile.am	2021-06-10 21:36:30.022604888 +0200
+@@ -18,13 +18,13 @@ BUILT_SOURCES = ipc.pb-c.c ipc.pb-c.h \
+ EXTRA_DIST = version.inc.in version.inc \
+ 	ipc.proto ctl.proto http-heads.gperf common.mk ocserv-fw
  
 -CORE_LDADD = ../gl/libgnu.a libccan.a libcommon.a
 +CORE_LDADD = ../gl/libgnu.a libccan.a libcommon.a libipc.a
@@ -13,10 +13,10 @@
  	$(LIBTASN1_LIBS) $(LIBOATH_LIBS) $(LIBNETTLE_LIBS) \
 -	$(LIBEV_LIBS) libipc.a $(NEEDED_LIBPROTOBUF_LIBS) \
 +	$(LIBEV_LIBS) $(NEEDED_LIBPROTOBUF_LIBS) \
- 	$(CODE_COVERAGE_LDFLAGS) 
- 	
- if ENABLE_LATENCY_SUPPORT
-@@ -134,9 +134,9 @@
+ 	$(CODE_COVERAGE_LDFLAGS)
+ 
+ if LOCAL_HTTP_PARSER
+@@ -135,9 +135,9 @@ else
  occtl_occtl_SOURCES += occtl/geoip.c
  endif
  
