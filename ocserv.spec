@@ -8,12 +8,12 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	1.1.3
-Release:	2
+Version:	1.2.0
+Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	4bf21afcd30b4f49079d796ae1ba4c24
+# Source0-md5:	a73b32eac50aa3e46ae3b4a9f6140c59
 Patch0:		%{name}-link.patch
 URL:		http://ocserv.gitlab.io/www/
 BuildRequires:	autoconf >= 2.61
@@ -77,7 +77,7 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 %patch0 -p1
 
 %build
-%{__aclocal} -I m4 -I gl/m4
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
@@ -99,7 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE NEWS README.md TODO
+%doc AUTHORS ChangeLog NEWS README.md TODO
 %attr(755,root,root) %{_bindir}/occtl
 %attr(755,root,root) %{_bindir}/ocpasswd
 %attr(755,root,root) %{_bindir}/ocserv-fw

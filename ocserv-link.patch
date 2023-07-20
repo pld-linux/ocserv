@@ -1,11 +1,11 @@
---- ocserv-1.1.3/src/Makefile.am.orig	2020-12-19 13:45:44.000000000 +0100
-+++ ocserv-1.1.3/src/Makefile.am	2021-06-10 21:36:30.022604888 +0200
+--- ocserv-1.2.0/src/Makefile.am.orig	2023-07-19 22:39:18.959302981 +0200
++++ ocserv-1.2.0/src/Makefile.am	2023-07-19 22:40:34.935558049 +0200
 @@ -18,13 +18,13 @@ BUILT_SOURCES = ipc.pb-c.c ipc.pb-c.h \
  EXTRA_DIST = version.inc.in version.inc \
  	ipc.proto ctl.proto http-heads.gperf common.mk ocserv-fw
  
--CORE_LDADD = ../gl/libgnu.a libccan.a libcommon.a
-+CORE_LDADD = ../gl/libgnu.a libccan.a libcommon.a libipc.a
+-CORE_LDADD = libccan.a libcommon.a
++CORE_LDADD = libccan.a libcommon.a libipc.a
  CORE_LDADD += $(LIBGNUTLS_LIBS) $(PAM_LIBS) $(LIBUTIL) \
  	$(LIBSECCOMP) $(LIBWRAP) $(LIBCRYPT) $(NEEDED_HTTP_PARSER_LIBS) \
  	$(NEEDED_LIBPROTOBUF_LIBS) $(LIBSYSTEMD) $(LIBTALLOC_LIBS) \
@@ -16,14 +16,14 @@
  	$(CODE_COVERAGE_LDFLAGS)
  
  if LOCAL_HTTP_PARSER
-@@ -135,9 +135,9 @@ else
+@@ -134,9 +134,9 @@ else
  occtl_occtl_SOURCES += occtl/geoip.c
  endif
  
--occtl_occtl_LDADD = ../gl/libgnu.a libcommon.a $(LIBREADLINE_LIBS) \
+-occtl_occtl_LDADD = libcommon.a $(LIBREADLINE_LIBS) \
 -	$(LIBNL3_LIBS) $(NEEDED_LIBPROTOBUF_LIBS) $(LIBTALLOC_LIBS) libccan.a \
 -	libipc.a $(NEEDED_LIBPROTOBUF_LIBS) $(CODE_COVERAGE_LDFLAGS) \
-+occtl_occtl_LDADD = ../gl/libgnu.a libcommon.a libccan.a libipc.a $(LIBREADLINE_LIBS) \
++occtl_occtl_LDADD = libcommon.a libccan.a libipc.a $(LIBREADLINE_LIBS) \
 +	$(LIBNL3_LIBS) $(NEEDED_LIBPROTOBUF_LIBS) $(LIBTALLOC_LIBS) \
 +	$(NEEDED_LIBPROTOBUF_LIBS) $(CODE_COVERAGE_LDFLAGS) \
  	$(LIBNETTLE_LIBS) $(MAXMIND_LIBS) $(GEOIP_LIBS)
