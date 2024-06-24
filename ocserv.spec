@@ -8,12 +8,12 @@
 Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
-Version:	1.2.0
-Release:	2
+Version:	1.3.0
+Release:	1
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
-# Source0-md5:	a73b32eac50aa3e46ae3b4a9f6140c59
+# Source0-md5:	2b6cfd509e3a18491e8c79ce613faa90
 Patch0:		%{name}-link.patch
 URL:		http://ocserv.gitlab.io/www/
 BuildRequires:	autoconf >= 2.61
@@ -21,7 +21,6 @@ BuildRequires:	automake >= 1:1.11.3
 %{?with_oidc:BuildRequires:	cjose-devel}
 %{?with_oidc:BuildRequires:	curl-devel}
 BuildRequires:	gnutls-devel >= 3.6.0
-BuildRequires:	http-parser-devel
 %{?with_oidc:BuildRequires:	jansson-devel}
 # pkgconfig(krb5-gssapi)
 %{?with_kerberos5:BuildRequires:	krb5-devel}
@@ -32,6 +31,7 @@ BuildRequires:	libpcl-devel
 BuildRequires:	libseccomp-devel
 %{?with_kerberos5:BuildRequires:	libtasn1-devel >= 3.9}
 BuildRequires:	libwrap-devel
+BuildRequires:	llhttp-devel
 BuildRequires:	lz4-devel >= 1:1.7
 BuildRequires:	nettle-devel >= 2.7
 BuildRequires:	oath-toolkit-devel
@@ -40,6 +40,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	protobuf-c-devel
 %{?with_radius:BuildRequires:	radcli-devel >= 1.2.5}
 BuildRequires:	readline-devel
+BuildRequires:	ronn
 BuildRequires:	systemd-devel
 BuildRequires:	talloc-devel
 BuildRequires:	tar >= 1:1.22
@@ -76,12 +77,15 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 %setup -q
 %patch0 -p1
 
+%{__sed} -i -e 's,/usr/libexec/,%{_libexecdir}/,' src/main-user.c
+
 %build
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
+	IPCALC=/bin/ipcalc \
 	--disable-silent-rules \
 	%{?with_oidc:--enable-oidc-auth} \
 	%{!?with_kerberos5:--without-gssapi} \
@@ -99,12 +103,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README.md TODO
+%doc AUTHORS ChangeLog NEWS README.md
 %attr(755,root,root) %{_bindir}/occtl
 %attr(755,root,root) %{_bindir}/ocpasswd
-%attr(755,root,root) %{_bindir}/ocserv-fw
 %attr(755,root,root) %{_sbindir}/ocserv
 %attr(755,root,root) %{_sbindir}/ocserv-worker
+%attr(755,root,root) %{_libexecdir}/ocserv-fw
 %{_mandir}/man8/occtl.8*
 %{_mandir}/man8/ocpasswd.8*
 %{_mandir}/man8/ocserv.8*
