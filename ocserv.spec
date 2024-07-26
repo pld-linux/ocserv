@@ -9,7 +9,7 @@ Summary:	OpenConnect VPN server
 Summary(pl.UTF-8):	Serwer VPN-a OpenConnect
 Name:		ocserv
 Version:	1.3.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/Networking
 Source0:	ftp://ftp.infradead.org/pub/ocserv/%{name}-%{version}.tar.xz
@@ -85,6 +85,7 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 %{__autoheader}
 %{__automake}
 %configure \
+	acl_cv_libdirstems=%{_lib} \
 	IPCALC=/bin/ipcalc \
 	--disable-silent-rules \
 	%{?with_oidc:--enable-oidc-auth} \
