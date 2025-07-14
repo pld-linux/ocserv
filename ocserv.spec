@@ -75,7 +75,7 @@ zaprojektowany jako zgodny także z innymi wariantami uniksów.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 %{__sed} -i -e 's,/usr/libexec/,%{_libexecdir}/,' src/main-user.c
 
